@@ -4,7 +4,7 @@ class FlatsController < ApplicationController
   def index
     if params[:query].present?
       @query = params[:query]
-      @flats = Flat.where("name iLike '%#{params[:query]}%'")
+      @flats = Flat.where("name iLiKe '%#{params[:query]}%'")
     else
       @flats = Flat.all
     end
@@ -16,18 +16,12 @@ class FlatsController < ApplicationController
 
   def create
     @flat = Flat.new(flat_params)
-    if @flat.save
-      redirect_to flats_path
-    else
-      render :new
-    end
+    @flat.save ? (redirect_to flats_path) : (render :new)
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @flat.update(flat_params)
